@@ -35,7 +35,8 @@ def finddistance():
       source = input("Enter your location: ") 
         
       # Take destination as input 
-      dest = input("Enter your destination: ") 
+      dest = input("Enter your destination: ")
+
       bingMapsKey = "AhVX9FEsa2eAKmaWFGIu6_93KjYMCHJkoGnWG7hUJspEcBzm-EW-KUw_qEgUjpFN"
       #now = datetime.now()
       url = "http://dev.virtualearth.net/REST/V1/Routes/Driving?wp.0=" + source + "&wp.1=" + dest + "&key=" + bingMapsKey
@@ -84,7 +85,7 @@ def getIpLocation(url):
 
     lat = out['lat']
     lon = out['lon']
-    status = out['status']
+    isUp = out['status']
     timezone = out['timezone']
     ipAdd = out["query"]
 
@@ -92,13 +93,13 @@ def getIpLocation(url):
     "City: " + city + "\n" + "Zip: " + zipcod)
     if status:
       print("More information on " + url)
-      print("Latitude: " + lat + "\n" + "Longitude: "+ lon + "\n" + 
-      "Web URL/IP status: " + status + "\n" + "Time Zone: "  + timezone + 
-      "\n" + "IP address" + ipAdd )
+      print("Latitude: " + str(lat) + "\n" + "Longitude: "+ str(lon) + "\n" + 
+      "Web URL/IP status: " + isUp + "\n" + "Time Zone: "  + timezone + 
+      "\n" + "IP address" + str(ipAdd ))
 
     if status:
       print("The end of Querying the web")
-  except:
+  except requests.exceptions.RequestException:
     print("Check the URL " + url + "\n Error finding it's geolocation.")
 
 def getIpFile(filename):
@@ -106,10 +107,13 @@ def getIpFile(filename):
   try:
     with open(filename, 'r') as f:
         for url in f:
+          url = url.strip()
           #removing the https and //
           ip = url.split("//")[-1].split("/")[0].split('?')[0]
+          ip = ip.strip()
           #if a url, get the ip
           ip = socket.gethostbyname(ip)
+
           #look up information on the ip
           ip = 'http://ip-api.com/json/' + ip
     
@@ -122,23 +126,23 @@ def getIpFile(filename):
 
           lat = out['lat']
           lon = out['lon']
-          status = out['status']
+          isUp = out['status']
           timezone = out['timezone']
           ipAdd = out["query"]
 
-          print("Looking up " + url)
+          print("\nLooking up " + url)
           print ("Country: " + country + "\n" + "State: " + region + "\n" + 
           "City: " + city + "\n" + "Zip: " + zipcod)
 
           if status:
             print("More information on " + url)
-            print("Latitude: " + lat + "\n" + "Longitude: "+ lon + "\n" + 
-            "Web URL/IP status: " + status + "\n" + "Time Zone: "  + timezone + 
-            "\n" + "IP address" + ipAdd )
+            print("Latitude: " + str(lat) + "\n" + "Longitude: "+ str(lon) + "\n" + 
+            "Web URL/IP status: " + isUp + "\n" + "Time Zone: "  + timezone + 
+            "\n" + "IP address" + str(ipAdd) )
 
     if status:
       print("The end of Querying the web")
-  except:
+  except requests.exceptions.RequestException:
     print("Check the URL " + url + "\n Error finding it's geolocation.")
 
 
@@ -148,8 +152,8 @@ def main():
   routes = False
   parser = argparse.ArgumentParser(description="Description for my parser", add_help=False)
   parser.add_argument("-r", "--route", action="store_true", help="Example: route argument")
-  parser.add_argument("-l", "--locate", help="Example: locate argument", nargs='?')
-  parser.add_argument("-f", "--file", help="Example: file argument", nargs='?')
+  parser.add_argument("-l", "--locate", help="Example: locate argument")
+  parser.add_argument("-f", "--file", help="Example: file argument")
   parser.add_argument("-v", "--verbose", action="store_true", help="Increase output verbosity")
   parser.add_argument("-h", "--help", action="store_true", help="Example: help argument")
   args = parser.parse_args(sys.argv[1:])
@@ -187,7 +191,7 @@ def main():
     
 
 if __name__ == "__main__":
-  if len(sys.argv) < 1:
-    usage()
-  else:
-    main()
+    if len(sys.argv) < 2:
+        usage()
+    else:
+        main()
