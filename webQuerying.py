@@ -55,13 +55,13 @@ def finddistance():
       duration = result["resourceSets"][0]["resources"][0]["travelDuration"]
 
 
-      print ("Route: " + source + " to " + dest)
+      print ("\nRoute: " + source + " to " + dest)
       for item in data:
         result = (item["instruction"]["text"])
         print(result) 
   
-      print("The distance is " + str(round((0.621371 * dis), 2)) + " miles")
-      print("It will take " + time.strftime("%H hours %M minutes %S seconds", time.gmtime(duration)))
+      print("\nThe distance from "+ source + " to " + dest + " is " + str(round((0.621371 * dis), 2)) + " miles")
+      print("It will take " + time.strftime("%H hours %M minutes %S seconds", time.gmtime(duration)) + " to get to your destinaion")
       if status:
         print("The end of Querying the web")
       noError = False
@@ -100,7 +100,7 @@ def getIpLocation(url):
       print("More information on " + url)
       print("Latitude: " + str(lat) + "\n" + "Longitude: "+ str(lon) + "\n" + 
       "Web URL/IP status: " + isUp + "\n" + "Time Zone: "  + timezone + 
-      "\n" + "IP address" + str(ipAdd ))
+      "\n" + "IP address " + str(ipAdd ))
 
     if status:
       print("The end of Querying the web")
@@ -143,7 +143,7 @@ def getIpFile(filename):
             print("More information on " + url)
             print("Latitude: " + str(lat) + "\n" + "Longitude: "+ str(lon) + "\n" + 
             "Web URL/IP status: " + isUp + "\n" + "Time Zone: "  + timezone + 
-            "\n" + "IP address" + str(ipAdd) )
+            "\n" + "IP address " + str(ipAdd) )
 
     if status:
       print("The end of Querying the web")
