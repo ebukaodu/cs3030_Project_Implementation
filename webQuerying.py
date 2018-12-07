@@ -1,9 +1,10 @@
 #!/usr/bin/python3
 import time
 import urllib
-import pygeoip
+import argparse
 import configparser
 import json
+from time import gmtime, strftime
 from contextlib import closing
 import urllib.request
 import sys
@@ -144,6 +145,7 @@ def getIpFile(filename):
 def main():
   global status
   ok = False
+  routes = False
   parser = argparse.ArgumentParser(description="Description for my parser", add_help=False)
   parser.add_argument("-r", "--route", action="store_true", help="Example: route argument")
   parser.add_argument("-l", "--locate", help="Example: locate argument", nargs='?')
@@ -185,7 +187,7 @@ def main():
     
 
 if __name__ == "__main__":
-  if sys.argv[1] == '-h' or sys.argv[1] == "--help":
+  if len(sys.argv) < 1:
     usage()
   else:
     main()
