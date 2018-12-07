@@ -58,7 +58,7 @@ def finddistance():
       print ("\nRoute: " + source + " to " + dest)
       for item in data:
         result = (item["instruction"]["text"])
-        print(result) 
+        print('\033[1;32m' + result +'\033[1;m') 
   
       print("\nThe distance from "+ source + " to " + dest + " is " + str(round((0.621371 * dis), 2)) + " miles")
       print("It will take " + time.strftime("%H hours %M minutes %S seconds", time.gmtime(duration)) + " to get to your destinaion")
