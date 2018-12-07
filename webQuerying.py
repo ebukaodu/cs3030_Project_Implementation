@@ -38,13 +38,18 @@ def finddistance():
       dest = input("Enter your destination: ")
 
       bingMapsKey = "AhVX9FEsa2eAKmaWFGIu6_93KjYMCHJkoGnWG7hUJspEcBzm-EW-KUw_qEgUjpFN"
+    
       #now = datetime.now()
-      url = "http://dev.virtualearth.net/REST/V1/Routes/Driving?wp.0=" + source + "&wp.1=" + dest + "&key=" + bingMapsKey
-      request = urllib.request.Request(url)
-      response = urllib.request.urlopen(request)
-
-      r = response.read().decode(encoding="utf-8")
-      result = json.loads(r)
+      #url = "http://dev.virtualearth.net/REST/V1/Routes/Driving?wp.0=" + source + "&wp.1=" + dest + "&key=" + bingMapsKey
+      #request = urllib.request.Request(url)
+      #response = urllib.request.urlopen(request)
+      #r = response.read().decode(encoding="utf-8")
+      #result = json.loads(r)
+    
+      url = "http://dev.virtualearth.net/REST/V1/Routes/Driving" 
+      connection = {"wp.0": source , "wp.1": dest,  "key" : bingMapsKey} 
+      response =  requests.get(url, params=connection)       
+      result = response.json()
       data = result["resourceSets"][0]["resources"][0]["routeLegs"][0]["itineraryItems"]
       dis = result["resourceSets"][0]["resources"][0]["travelDistance"]
       duration = result["resourceSets"][0]["resources"][0]["travelDuration"]
